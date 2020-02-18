@@ -1,11 +1,12 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
-
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
+    <div class="row jumbotron">
+      <h1 class="display-3">Bug Tracker</h1>
+      <p class="lead">Welcome to the Bug Tracker application, built to help you with your bug related issues</p>
+    </div>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>

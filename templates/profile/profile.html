@@ -1,0 +1,33 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="card row">
+    <div class="card-body">
+        <h2 class="card-title">
+            User Profile
+        </h2>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td scope="row">Username</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">Last Login</td>
+                        <td>{{ user.last_login }}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">Date Joined</td>
+                        <td>{{ user.date_joined}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}

@@ -1,11 +1,8 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 
-{% block title %}Bugs{% endblock %}
-
 {% block content %}
 {% if user.is_authenticated %}
-    <div class="container">
         <form class="">
             <div class="form-group row">
                 <label for="titleInput">Title</label>
@@ -28,7 +25,6 @@
                 <small id="descriptionHelp" class="form-text text-muted">Please provide priority level</small>
             </div>
         </form>
-    </div>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>
