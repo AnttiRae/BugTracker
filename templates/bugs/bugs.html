@@ -6,24 +6,21 @@
         <form class="">
             <div class="form-group row">
                 <label for="titleInput">Title</label>
-                <input type="text" class="form-control" id="titleInput" aria-describedby="titleHelp" placeholder="Enter title">
+                {{ form.title }}
                 <small id="titleHelp" class="form-text text-muted">A title for your entry</small>
 
             </div>
             <div class="form-group row">
                 <label for="descriptionInput">Description</label>
-                <textarea type="text" class="form-control" id="descriptionInput" aria-describedby="descriptionHelp" placeholder="Enter Description"></textarea>
+                {{ form.description}}
                 <small id="descriptionHelp" class="form-text text-muted">Please provide information about the problem you encountered</small>
             </div>
             <div class="form-group row">
                 <label for="descriptionInput">Priority</label>
-                <select id="prioritySelect" class="form-control" aria-describedby="descriptionHelp">
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                </select>
+                {{ form.priority}}
                 <small id="descriptionHelp" class="form-text text-muted">Please provide priority level</small>
             </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 {% else %}
   <p>You are not logged in</p>
