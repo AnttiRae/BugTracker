@@ -18,12 +18,15 @@ class BugView(View):
         form = self.form_class(initial=self.initial)
         return render(request, 'bugs/bugs.html', {'form': form})
     
+    ## new bug posting
     def post(self, request, *args , **kwargs):
         print('POST jou')
         form = self.form_class(request.POST)
         if form.is_valid():
-            bug = form.save(commit=False)
-            post.save()
+            bug = request.POST.dict()
+            del bug['csrfmiddlewaretoken']
+            bug['reported_by'] = request.user
+            Bug.objects.create(**bug)
             return HttpResponse('Jihuu')
         else:
             return HttpResponse('ei jihuu')
