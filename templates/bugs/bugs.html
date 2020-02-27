@@ -3,7 +3,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-        <form class="">
+        <form method="POST" class="">
+            {% csrf_token %}
             <div class="form-group row">
                 <label for="titleInput">Title</label>
                 {{ form.title }}
@@ -24,6 +25,7 @@
         </form>
 {% else %}
   <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
+  <a href="{% url 'login' %}">Login</a>
+  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
 {% endif %}
 {% endblock %}
