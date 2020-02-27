@@ -16,12 +16,15 @@ class BugView(View):
     def get(self, request, *args, **kwargs):
         print('GET jou')
         form = self.form_class(initial=self.initial)
-        return render(request, 'bugs/bugs.html', {'form': form})
-    
+        bugs = Bug.objects.all()
+        print(bugs)
+        return render(request, 'bugs/bugs.html', {'form': form, 'bugs': bugs})
+
     ## new bug posting
     def post(self, request, *args , **kwargs):
         print('POST jou')
         form = self.form_class(request.POST)
+        print(request.POST)
         if form.is_valid():
             bug = request.POST.dict()
             del bug['csrfmiddlewaretoken']
@@ -31,6 +34,11 @@ class BugView(View):
         else:
             return HttpResponse('ei jihuu')
 
+
+class singleBugView(View):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('moi')
 
 class ProfileView(View):
 
