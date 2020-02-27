@@ -1,6 +1,6 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
-
+<!-- {% load crispy_forms_tags %} -->
 {% block content %}
 {% if user.is_authenticated %}
         <form method="POST" class="">
@@ -23,6 +23,12 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        {% for bug in bugs %}
+        <div class="list-group">
+            <a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% endif %}"> {{ bug.title }} </a>
+          </div>
+          
+        {% endfor %}
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Login</a>
