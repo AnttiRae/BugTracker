@@ -46,7 +46,6 @@ class UserCreationForm(forms.ModelForm):
         label=_("Password again"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
         strip=False,
-        help_text=_(""),
     )
 
     class Meta:
