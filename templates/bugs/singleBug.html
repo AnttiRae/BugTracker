@@ -1,0 +1,25 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+        <div class="card border">
+            <div class="card-body">
+              {% for bug in bugs %}
+              <div class="list-group">
+                    <a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% endif %}"> {{ bug.title }} </a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ bug.title }}</h4>
+                <p class="card-text">{{ bug.description }}</p>
+            </div>
+        </div>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Login</a>
+  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
+{% endif %}
+{% endblock %}
