@@ -7,6 +7,6 @@ class BugForm(forms.Form):
         ('GREEN', 'Low'),
     )
 
-    title = forms.CharField(label='Title', max_length=80)
-    description = forms.CharField(widget=forms.Textarea, label='Description', max_length=500)
-    priority = forms.ChoiceField(choices=PRIORITIES)
+    title = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), label='Title', max_length=80)
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), label='Description', max_length=500)
+    priority = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=PRIORITIES)
