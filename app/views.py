@@ -38,7 +38,9 @@ class BugView(View):
 class singleBugView(View):
 
     def get(self, request, *args, **kwargs):
-        return HttpResponse('moi')
+        print(kwargs['pk'])
+        bug = Bug.objects.get(pk=kwargs['pk'])
+        return render(request, 'bugs/singleBug.html', {'bug': bug})
 
 class ProfileView(View):
 
