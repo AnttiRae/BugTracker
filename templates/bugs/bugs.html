@@ -2,6 +2,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
+    <div class="container">
+        <div class="row mt-4">
+            <h2>Submit a new bug</h2>
+        </div>
+        <hr class="m-4">
+    </div>
         <form method="POST">
             {% csrf_token %}
             <div class="form-group row">
@@ -31,16 +37,22 @@
                 </div>
             </div>
         </form>
-        <div class="card border">
+        <div class="container">
+            <div class="row mt-4">
+                <h2>Bug list</h2>
+            </div>
+            <hr class="">
+        </div>
+        <div class="card border scroll">
             <div class="card-body">
-              {% for bug in bugs %}
-              <div class="list-group">
-                    <a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% endif %}"> {{ bug.title }} </a>
-              </div>
+                {% for bug in bugs %}
+                <div class="list-group">
+                    <a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% else %} bg-light {% endif %}"> {{ bug.title }} </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
           
-        {% endfor %}
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Login</a>
