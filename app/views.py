@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+import json
 # Create your views here.
 
 from .forms import BugForm
@@ -43,9 +44,32 @@ class singleBugView(View):
         return render(request, 'bugs/singleBug.html', {'bug': bug})
     
     def put(self, request, *args, **kwargs):
-        bug = Bug.objects.get(pk=kwargs['pk'])
-        print(bug)
-        return HttpResponse('PUTattu')
+        print('user', request.user)
+        print('bug id', kwargs['pk'])
+        body = json.loads(request.body)
+        print('data?', body['fixed'])
+        try:
+            if request.user.is_authenticated:
+                bug = Bug.objects.get(pk=kwargs['pk'])
+                bug.fixed = body['fixed']
+                bug.save()
+                return HttpResponse('Resource updated')
+            else:
+                return HttpResponse('Not logged in')
+        except ObjectDoesNotExist as error:
+            return HttpResponse(error)
+
+    def delete(self, request, *args, **kwargs):
+        print(request.user)
+        try:
+            if request.user.is_authenticated:
+                bug = Bug.objects.get(pk=kwargs['pk'])
+                bug.delete()
+                return HttpResponse('Resource deleted')
+            else:
+                return HttpResponse('Not logged in')
+        except ObjectDoesNotExist as error:
+            return HttpResponse(error)
 
 class ProfileView(View):
 
