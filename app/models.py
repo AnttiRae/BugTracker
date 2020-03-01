@@ -5,14 +5,14 @@ from django.contrib.auth.models import User
 
 class Bug(models.Model):
     PRIORITIES = (
-        ('RED', 'High'),
-        ('YELLOW', 'Medium'),
-        ('GREEN', 'Low'),
+        ('High', 'High'),
+        ('Medium', 'Medium'),
+        ('Low', 'Low'),
     )
     fixed = models.BooleanField(default=False)
     title = models.CharField(max_length=255)
     priority = models.CharField(max_length=10, choices=PRIORITIES)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=10000)
     created_at = models.DateField(default=timezone.now)
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
