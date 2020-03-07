@@ -5,12 +5,18 @@ class Bugs {
 		axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 		axios.defaults.withCredentials = true;
 	}
-	UpdateBug(id) {
+	UpdateBug(id, title, description, priority) {
 		axios({
 			method: 'put',
-			url: '/bugs/' + id
+			url: '/bugs/' + id,
+			data: {
+				title: title,
+				description: description,
+				priority: priority
+			}
 		}).then(function(response) {
 			console.log(response);
+			location.reload();
 		});
     }
     MarkAsFixed(id, status) {

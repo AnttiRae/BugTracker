@@ -35,24 +35,29 @@ class BugView(View):
 
 
 class singleBugView(View):
+    form_class = BugForm
+    initial = {'key': 'value'}
+    template_name = 'bugs/singleBug.html'
 
     def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
         try:
             bug = Bug.objects.get(pk=kwargs['pk'])
         except ObjectDoesNotExist as error:
             return HttpResponse(error)
-        return render(request, 'bugs/singleBug.html', {'bug': bug})
+        return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug})
     
     def put(self, request, *args, **kwargs):
         print('user', request.user)
         print('bug id', kwargs['pk'])
+        print(request)
         body = json.loads(request.body)
-        print('data?', body['fixed'])
+        print('data?', body)
         try:
             if request.user.is_authenticated:
-                bug = Bug.objects.get(pk=kwargs['pk'])
-                bug.fixed = body['fixed']
-                bug.save()
+                bug = Bug.objects.filter(pk=kwargs['pk'])
+                print(type(bug))
+                bug.update(**body)
                 return HttpResponse('Resource updated')
             else:
                 return HttpResponse('Not logged in')
