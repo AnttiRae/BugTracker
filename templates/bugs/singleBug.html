@@ -1,13 +1,14 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 {% block content %}
+{% include 'bugs/modal.html'%}
 {% if user.is_authenticated %}
 		<div class="card">
 			<div class="card-header">
 			   <h2>{{ bug.title }}</h2>
 			</div>
 			<div class="card-body">
-				<h5 class="card-title">Issue submitted by {{ bug.reported_by }} on {{ bug.created_at }}</h5>
+				<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
 				<p class="card-text">{{ bug.description }}</p>
 				<div class="border-top border-dark py-3">
 				<ul class="list-inline">
@@ -17,11 +18,17 @@
 			 </div>
 			  <div class="row">
 				<button onclick="bugs.DeleteBug({{ bug.pk }})" class="btn btn-danger">Delete Bug</button>
-				<button onclick="bugs.UpdateBug({{ bug.pk }})" class="btn btn-primary">Edit Bug</button>
+				<button id="editButton" type="button" class="btn btn-primary" data-toggle="modal" data-taget="#editModal"></button>
 				<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary">Mark as fixed</button>
 			  </div>
 			</div>
 		  </div>
+		  <script>
+				let editModal = $("#editModal");
+				$("#editButton").click(function(){
+					editModal.modal();
+				})
+		  </script>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Login</a>

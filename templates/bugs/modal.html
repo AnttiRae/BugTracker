@@ -1,0 +1,43 @@
+        <!-- Modal -->
+		<div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="titleInput" class="col-form-label col-sm-2">Title</label>
+                                <div class="col-sm-10 ">
+                                    <input type="text" name="title" class="form-control" maxlength="80" required="" id="id_title" value="{{ bug.title }}">
+                                    <small id="titleHelp" class="form-text text-muted">A title for your entry</small>
+                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="descriptionInput" class="col-form-label col-sm-2">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea name="description" cols="40" rows="10" class="form-control" maxlength="10000" required="" id="id_description" style="height: 271px;">{{ bug.description }}</textarea>
+                                    <small id="descriptionHelp" class="form-text text-muted">Please provide information about the problem you encountered</small>
+                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="descriptionInput" class="col-aform-label col-sm-2">Priority</label>
+                            <div class="col-sm-10">
+                                    {{ form.priority }}
+                                <small id="descriptionHelp" class="form-text text-muted">Please provide priority level</small>
+                            </div>
+                        </div>
+                    </form>
+				</div>
+				<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="bugs.UpdateBug({{ bug.pk }}, 'morjens', 'High')" class="btn btn-primary">Update</button>
+				</div>
+			</div>
+			</div>
+        </div>
