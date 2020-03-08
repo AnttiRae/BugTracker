@@ -36,8 +36,17 @@
 				</div>
 				<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button onclick="bugs.UpdateBug({{ bug.pk }}, 'morjens', 'High')" class="btn btn-primary">Update</button>
+                <button onclick="handleClick()" class="btn btn-primary">Update</button>
 				</div>
 			</div>
 			</div>
         </div>
+        <script>
+            function handleClick() {
+                let title = $("#id_title").val();
+                let description = $("#id_description").val();
+                let priority = $("#id_priority").val()
+                console.log(description, title, priority);
+                bugs.UpdateBug({{ bug.pk }}, title, description, priority)
+            }
+        </script>

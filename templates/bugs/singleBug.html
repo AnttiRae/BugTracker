@@ -10,18 +10,28 @@
 			<div class="card-body">
 				<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
 				<p class="card-text">{{ bug.description }}</p>
-				<div class="border-top border-dark py-3">
-				<ul class="list-inline">
-					<li class="list-inline-item"><em><b>Bug Priority:</b></em> {{ bug.priority }}</li>
-					<li class="list-inline-item"><em><b>Bug is fixed:</b></em> {{ bug.fixed }}</li>
-				</ul>
-			 </div>
-			  <div class="row">
-				<button onclick="bugs.DeleteBug({{ bug.pk }})" class="btn btn-danger">Delete Bug</button>
-				<button id="editButton" type="button" class="btn btn-primary" data-toggle="modal" data-taget="#editModal"></button>
-				<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary">Mark as fixed</button>
-			  </div>
-			</div>
+				<div class="border-top border-dark py-3 container">
+					<ul class="list-inline row">
+						<div class="col-6">
+							<li class="list-inline-item"><em><b>Bug Priority:</b></em> {{ bug.priority }}</li>
+							<li class="list-inline-item"><em><b>Bug is fixed:</b></em> {{ bug.fixed }}</li>
+						</div>
+						<div class="col">
+						</div>
+						<div class="btn-group col-md-auto justify-content-end" role="group">
+							<button id="btnGroupDrop1" type="button"
+									class="btn btn-secondary dropdown-toggle"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							⚙
+							</button>
+							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+								<button onclick="bugs.DeleteBug({{ bug.pk }})" class="btn btn-danger dropdown-item">Delete</button>
+								<button id="editButton" type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-taget="#editModal">Edit</button>
+								<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary dropdown-item">Mark as fixed</button>
+							</div>
+						</div>
+					</ul>
+				</div>
 		  </div>
 		  <script>
 				let editModal = $("#editModal");
