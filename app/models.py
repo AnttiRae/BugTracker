@@ -9,6 +9,7 @@ class Bug(models.Model):
         ('Medium', 'Medium'),
         ('Low', 'Low'),
     )
+    id = models.AutoField(primary_key=True)
     fixed = models.BooleanField(default=False)
     title = models.CharField(max_length=255)
     priority = models.CharField(max_length=10, choices=PRIORITIES)
@@ -17,4 +18,13 @@ class Bug(models.Model):
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "%s %s" % (self.description, self.reported_by)
+        return '%s by %s' % (self.title, self.reported_by)
+
+class Comment(models.Model):
+    message = models.CharField(max_length=512)
+    bug = models.ForeignKey(Bug, on_delete=models.CASCADE)
+    commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return '%s - %s' % (self.created_at, self.commented_by)

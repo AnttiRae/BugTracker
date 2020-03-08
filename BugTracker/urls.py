@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from app.views import BugView, ProfileView, singleBugView, HomeView
+from app.views import BugView, ProfileView, singleBugView, HomeView, CommentsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('bugs/', BugView.as_view(), name='bugs-view'),
     path('bugs/<int:pk>', singleBugView.as_view(), name='single-bug'),
+    path('bugs/<int:pk>/comment', CommentsView.as_view(), name='comments'),
     path('profile/', ProfileView.as_view(), name='profile-view'),
     path('', HomeView.as_view(), name='home'),
 ]
