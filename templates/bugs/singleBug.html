@@ -27,10 +27,42 @@
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								<button onclick="bugs.DeleteBug({{ bug.pk }})" class="btn btn-danger dropdown-item">Delete</button>
 								<button id="editButton" type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-taget="#editModal">Edit</button>
-								<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary dropdown-item">Mark as fixed</button>
+								<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary dropdown-item">Toggle fixed</button>
 							</div>
 						</div>
 					</ul>
+				</div>
+				<div>
+					<div class="list-group">
+						{% for comment in comments %}
+						<div class="list-group-item alert alert-primary">
+						  <div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">{{ comment.commented_by|title }}:</h5>
+							<small>{{ comment.created_at }}</small>
+						  </div>
+						  <p class="mb-1">{{ comment.message }}</p>
+						</div>
+						{% endfor %}
+					  </div>
+					</div>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Take part in the discussion:</h5>
+							<form method="POST" action="{{ bug.pk }}/comment">
+							{% csrf_token %}
+							<div class="form-group row">
+								<label for="commentInput" class="col-form-label px-2">Comment</label>
+								<div class="col-10 ">
+									{{ form.message }}
+									<small id="titleHelp" class="form-text text-muted">Please be civil</small>
+								</div>
+								<div class="row align-items-end py-4 px-2 col">
+									<button type="submit" class="btn btn-primary align-bottom">Comment</button>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
 				</div>
 		  </div>
 		  <script>

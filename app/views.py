@@ -6,8 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 import json
 # Create your views here.
 
-from .forms import BugForm
-from .models import Bug
+from .forms import BugForm, CommentForm
+from .models import Bug, Comment
 
 class BugView(View):
     form_class = BugForm
@@ -31,11 +31,28 @@ class BugView(View):
             bug.refresh_from_db()
             return redirect(f'/bugs/{bug.pk}')
         else:
-            return HttpResponse('ei jihuu')
+            return HttpResponse('Something went wrong, sorry')
 
+
+class CommentsView(View):
+    form_class = CommentForm
+    initial = {'key': 'value'}
+
+    def post(self, request, *args, **kwargs):
+        print('POST comment')
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            comment = request.POST.dict()
+            del comment['csrfmiddlewaretoken']
+            comment['commented_by'] = request.user
+            comment['bug'] = Bug.objects.get(pk=kwargs['pk'])
+            Comment.objects.create(**comment)
+            return redirect(f"/bugs/{kwargs['pk']}")
+        else:
+            return HttpResponse('Something went wrong, sorry')
 
 class singleBugView(View):
-    form_class = BugForm
+    form_class = CommentForm
     initial = {'key': 'value'}
     template_name = 'bugs/singleBug.html'
 
@@ -43,9 +60,11 @@ class singleBugView(View):
         form = self.form_class(initial=self.initial)
         try:
             bug = Bug.objects.get(pk=kwargs['pk'])
+            comments = Comment.objects.filter(bug=kwargs['pk'])
+            print(comments)
         except ObjectDoesNotExist as error:
             return HttpResponse(error)
-        return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug})
+        return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug, 'comments': comments})
     
     def put(self, request, *args, **kwargs):
         print('user', request.user)
