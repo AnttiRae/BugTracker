@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">
-				<h2>Bugs Reported by Users</h2>
+				<h2>Bugs Reported by Our Users</h2>
 				<div class="card border scroll">
 					<div class="card-body">
 						{% for bug in all_bugs %}
@@ -29,6 +29,7 @@
 			<div class="col-sm">
 				<h2>Bugs Reported by {{ current_user|title }}</h2>
 				<div class="card border scroll">
+					{% if bugs_by_user.all %}
 					<div class="card-body">
 					  {% for bug in bugs_by_user %}
 					  <div class="list-group">
@@ -36,6 +37,12 @@
 					  </div>
 					  {% endfor %}
 					</div>
+					{% else %}
+						<div class="card-body">
+							<p>You have not submitted any bugs yet</p>
+							<p>Get started by <a href="/bugs">submitting a bug</a></p>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
