@@ -1,5 +1,6 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
+{% load markdownify %}
 {% block content %}
 {% include 'bugs/modal.html'%}
 {% if user.is_authenticated %}
@@ -9,7 +10,7 @@
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
-				<p class="card-text">{{ bug.description }}</p>
+				<p class="card-text">{{ bug.description|markdownify |linebreaks}}</p>
 				<div class="border-top border-dark py-3 container">
 					<ul class="list-inline row">
 						<div class="col-6">
