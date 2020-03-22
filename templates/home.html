@@ -1,6 +1,6 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
-
+{% load markdownify %}
 {% block content %}
 {% if user.is_authenticated %}
     <div class="row jumbotron">
@@ -19,7 +19,16 @@
 						{% for bug in all_bugs %}
 							{% if user != bug.reported_by %}
 								<div class="list-group">
-										<a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% else %} bg-light {% endif %}"> {{ bug.title }} </a>
+									<a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action flex-column align-items-start  {% if bug.fixed %} bg-success {% else %} bg-light {% endif %}">
+										<div class="f-flex w-100 justify-content-between">
+											<h5 class="mb-1">{{ bug.title }}</h5>
+										</div>
+										<p class="mb-1">{{ bug.description|slice:"100"|cut:"#"|markdownify }}...</p>
+										<div class="text-right">
+											<small>Submitted: {{ bug.created_at}}</small>
+											<small>Fixed: {{ bug.fixed }}</small>
+										</div>
+									</a>
 								</div>
 							{% endif %}
 						{% endfor %}

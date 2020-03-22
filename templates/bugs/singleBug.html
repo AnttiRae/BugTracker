@@ -1,5 +1,6 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
+{% load markdownify %}
 {% block content %}
 {% include 'bugs/modal.html'%}
 {% if user.is_authenticated %}
@@ -9,12 +10,13 @@
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
-				<p class="card-text">{{ bug.description }}</p>
+				<p class="card-text">{{ bug.description|markdownify |linebreaks}}</p>
 				<div class="border-top border-dark py-3 container">
 					<ul class="list-inline row">
 						<div class="col-6">
 							<li class="list-inline-item"><em><b>Bug Priority:</b></em> {{ bug.priority }}</li>
 							<li class="list-inline-item"><em><b>Bug is fixed:</b></em> {{ bug.fixed }}</li>
+							<li class="list-inline-item"><em><b>Points:</b></em> {{ bug.score }}</li>
 						</div>
 						<div class="col">
 						</div>
@@ -35,12 +37,24 @@
 				<div>
 					<div class="list-group">
 						{% for comment in comments %}
-						<div class="list-group-item alert alert-primary">
-						  <div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">{{ comment.commented_by|title }}:</h5>
-							<small>{{ comment.created_at }}</small>
-						  </div>
-						  <p class="mb-1">{{ comment.message }}</p>
+						<div class="list-group-item alert alert-primary container">
+							<div class="row p-0 m-0">
+								<div class="col-1 h-100 p-auto">
+									<a class="btn btn-success" href="#" role="button">&uarr;</a>
+									<p class="m-2">{{ comment.score }}</p>
+									<a class="btn btn-danger" href="#" role="button">&darr;</a>
+								</div>
+								<div class="col-11 p-0 m-0">
+									<div class="d-flex w-100 justify-content-between">
+										<h5 class="mb-1">{{ comment.commented_by|title }}:</h5>
+										<small>{{ comment.created_at }}</small>
+									</div>
+									<p class="">{{ comment.message }}</p>
+								</div>
+								<div class="row">
+									<div class="col-1"></div>
+								</div>
+							</div>
 						</div>
 						{% endfor %}
 					  </div>
