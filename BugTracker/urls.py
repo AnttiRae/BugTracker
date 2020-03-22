@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.conf.urls.static import static
+from django.conf import settings
 from app.views import BugView, ProfileView, singleBugView, HomeView, CommentsView
 
 urlpatterns = [
@@ -27,4 +29,4 @@ urlpatterns = [
     path('bugs/<int:pk>/comment', CommentsView.as_view(), name='comments'),
     path('profile/', ProfileView.as_view(), name='profile-view'),
     path('', HomeView.as_view(), name='home'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
