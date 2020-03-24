@@ -25,7 +25,9 @@ SECRET_KEY = 'orpdx-ko-xh6b%%#q(gqrh9s%w4$3(xdfc1fpzd+-jiqjq0day'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0'
+]
 
 
 # Application definition
