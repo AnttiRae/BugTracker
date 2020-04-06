@@ -61,21 +61,15 @@ class singleBugView(View):
         try:
             bug = Bug.objects.get(pk=kwargs['pk'])
             comments = Comment.objects.filter(bug=kwargs['pk'])
-            print(comments)
         except ObjectDoesNotExist as error:
             return HttpResponse(error)
         return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug, 'comments': comments})
     
     def put(self, request, *args, **kwargs):
-        print('user', request.user)
-        print('bug id', kwargs['pk'])
-        print(request)
         body = json.loads(request.body)
-        print('data?', body)
         try:
             if request.user.is_authenticated:
                 bug = Bug.objects.filter(pk=kwargs['pk'])
-                print(type(bug))
                 bug.update(**body)
                 return HttpResponse('Resource updated')
             else:
@@ -84,7 +78,6 @@ class singleBugView(View):
             return HttpResponse(error)
 
     def delete(self, request, *args, **kwargs):
-        print(request.user)
         try:
             if request.user.is_authenticated:
                 bug = Bug.objects.get(pk=kwargs['pk'])
