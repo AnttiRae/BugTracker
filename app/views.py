@@ -67,15 +67,10 @@ class singleBugView(View):
         return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug, 'comments': comments})
     
     def put(self, request, *args, **kwargs):
-        print('user', request.user)
-        print('bug id', kwargs['pk'])
-        print(request)
         body = json.loads(request.body)
-        print('data?', body)
         try:
             if request.user.is_authenticated:
                 bug = Bug.objects.filter(pk=kwargs['pk'])
-                print(type(bug))
                 bug.update(**body)
                 return HttpResponse('Resource updated')
             else:
@@ -87,7 +82,7 @@ class singleBugView(View):
         print(request.user)
         try:
             if request.user.is_authenticated:
-                bug = Bug.objects.get(pk=kwargs['pk'])
+                bug = Bug.objects.get(pk=kwargs['pk'], reported_by=request.user)
                 bug.delete()
                 return HttpResponse('Resource deleted')
             else:

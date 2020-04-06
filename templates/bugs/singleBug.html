@@ -20,6 +20,7 @@
 						</div>
 						<div class="col">
 						</div>
+						 {% if user == bug.reported_by %}
 						<div class="btn-group col-md-auto justify-content-end" role="group">
 							<button id="btnGroupDrop1" type="button"
 									class="btn btn-secondary dropdown-toggle"
@@ -32,6 +33,7 @@
 								<button onclick="bugs.MarkAsFixed({{ bug.pk }}, {{ bug.fixed|lower}})" class="btn btn-primary dropdown-item">Toggle fixed</button>
 							</div>
 						</div>
+						{% endif %}
 					</ul>
 				</div>
 				<div>
