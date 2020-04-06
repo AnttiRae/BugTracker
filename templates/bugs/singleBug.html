@@ -42,9 +42,9 @@
 						<div class="list-group-item alert alert-primary container">
 							<div class="row p-0 m-0">
 								<div class="col-1 h-100 p-auto">
-									<a class="btn btn-success" href="#" role="button">&uarr;</a>
+									<a class="btn btn-success" onclick="comments.ScoreComment({{ comment.pk }}, 1)" role="button">&uarr;</a>
 									<p class="m-2">{{ comment.score }}</p>
-									<a class="btn btn-danger" href="#" role="button">&darr;</a>
+									<a class="btn btn-danger" onclick="comments.ScoreComment({{ comment.pk }}, -1)" role="button">&darr;</a>
 								</div>
 								<div class="col-11 p-0 m-0">
 									<div class="d-flex w-100 justify-content-between">

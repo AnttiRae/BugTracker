@@ -42,4 +42,19 @@ class Bugs {
 	}
 }
 
+class Comments{
+	constructor() {
+		axios.defaults.xsrfCookieName = 'csrftoken';
+		axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+		axios.defaults.withCredentials = true;
+	}
+	ScoreComment(id, vote){
+		console.log('voted', id, vote)
+	}
+	ScoreBug(id, vote) {
+		console.log('voted', id, vote)
+	}
+}
+
 bugs = new Bugs();
+comments = new Comments();

@@ -50,6 +50,9 @@ class CommentsView(View):
             return redirect(f"/bugs/{kwargs['pk']}")
         else:
             return HttpResponse('Something went wrong, sorry')
+    def put(self, request, *args, **kwargs):
+        print('aaaa')
+        return HttpResponse('joutsijou')
 
 class singleBugView(View):
     form_class = CommentForm
