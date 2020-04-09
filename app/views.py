@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import F
 import json
 # Create your views here.
 
@@ -51,8 +52,21 @@ class CommentsView(View):
         else:
             return HttpResponse('Something went wrong, sorry')
     def put(self, request, *args, **kwargs):
-        print('aaaa')
-        return HttpResponse('joutsijou')
+        body = json.loads(request.body)
+        user = request.user
+        print(user.username)
+        print(body)
+        vote = body['vote']
+        commentId = body['comment']
+        comment = Comment.objects.get(pk=commentId)
+        if str(user) not in comment.voters:
+            comment.score += vote
+            comment.voters.append(user)
+            comment.save()
+            return HttpResponse('vote counted')
+        else:
+            return HttpResponse('vote already counted')
+        
 
 class singleBugView(View):
     form_class = CommentForm
@@ -63,7 +77,7 @@ class singleBugView(View):
         form = self.form_class(initial=self.initial)
         try:
             bug = Bug.objects.get(pk=kwargs['pk'])
-            comments = Comment.objects.filter(bug=kwargs['pk'])
+            comments = Comment.objects.filter(bug=kwargs['pk']).order_by('-created_at')
             print(comments)
         except ObjectDoesNotExist as error:
             return HttpResponse(error)

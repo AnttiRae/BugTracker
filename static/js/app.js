@@ -15,12 +15,10 @@ class Bugs {
 				priority: priority
 			}
 		}).then(function(response) {
-			console.log(response);
 			location.reload();
 		});
     }
     MarkAsFixed(id, status) {
-        console.log();
         axios({
 			method: 'put',
             url: '/bugs/' + id,
@@ -48,11 +46,21 @@ class Comments{
 		axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 		axios.defaults.withCredentials = true;
 	}
-	ScoreComment(id, vote){
-		console.log('voted', id, vote)
+	ScoreComment(bugId, commentId, vote){
+		axios({
+			method: 'put',
+			url: `/bugs/${bugId}/comment`,
+			data: {
+				vote: vote,
+				comment: commentId
+			}
+		}).then(function(response){
+			location.reload();
+			console.log('voted, reloaded', response)
+		})
 	}
-	ScoreBug(id, vote) {
-		console.log('voted', id, vote)
+	ScoreBug(bugId, vote) {
+
 	}
 }
 
