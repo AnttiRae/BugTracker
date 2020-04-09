@@ -10,6 +10,7 @@ pylint = "*"
 django = "*"
 django-restframework = "*"
 django-markdownify = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"

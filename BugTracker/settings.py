@@ -26,7 +26,8 @@ SECRET_KEY = 'orpdx-ko-xh6b%%#q(gqrh9s%w4$3(xdfc1fpzd+-jiqjq0day'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '0.0.0.0'
+    '0.0.0.0',
+    '127.0.0.1'
 ]
 
 
@@ -81,8 +82,12 @@ WSGI_APPLICATION = 'BugTracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bugtracker',
+        'USER': 'bugtrackeruser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
