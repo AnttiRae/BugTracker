@@ -6,12 +6,21 @@
 {% if user.is_authenticated %}
 		<div class="card">
 			<div class="card-header">
-			   <h2>{{ bug.title }}</h2>
+				<h2>{{ bug.title }}</h2>
 			</div>
 			<div class="card-body">
-				<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
-				<p class="card-text">{{ bug.description|markdownify |linebreaks}}</p>
-				<div class="border-top border-dark py-3 container">
+				<div class="row">
+					<div class="col-1 h-100 p-auto">
+						<a class="btn btn-success" onclick="bugs.ScoreBug({{ bug.pk }}, 1)" role="button">&uarr;</a>
+						<p class="m-2">{{ bug.score }}</p>
+						<a class="btn btn-danger" onclick="bugs.ScoreBug({{ bug.pk }}, -1)" role="button">&darr;</a>
+					</div>
+					<div class="col-10 p-0 m-0 justify-content-between">
+						<h5 class="card-title">Issue submitted by {{ bug.reported_by|title }} on {{ bug.created_at }}</h5>
+						<p class="card-text">{{ bug.description|markdownify |linebreaks}}</p>
+					</div>
+				</div>
+				<div class="border-top border-dark mt-1 pt-1 py-3 container">
 					<ul class="list-inline row">
 						<div class="col-6">
 							<li class="list-inline-item"><em><b>Bug Priority:</b></em> {{ bug.priority }}</li>
@@ -59,7 +68,7 @@
 							</div>
 						</div>
 						{% endfor %}
-					  </div>
+					</div>
 					</div>
 					<div class="card">
 						<div class="card-body">
@@ -80,16 +89,16 @@
 						</div>
 					</div>
 				</div>
-		  </div>
-		  <script>
+		</div>
+		<script>
 				let editModal = $("#editModal");
 				$("#editButton").click(function(){
 					editModal.modal();
 				})
-		  </script>
+		</script>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Login</a>
-  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
+	<p>You are not logged in</p>
+	<a href="{% url 'login' %}">Login</a>
+	<p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
 {% endif %}
 {% endblock %}

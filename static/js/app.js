@@ -5,6 +5,18 @@ class Bugs {
 		axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 		axios.defaults.withCredentials = true;
 	}
+	ScoreBug(bugId, vote) {
+		axios({
+			method: 'put',
+			url: `/bugs/${bugId}`,
+			data: {
+				vote: vote
+			}
+		}).then(function(response){
+			location.reload();
+			console.log('voted, reloaded', response)
+		})
+	}
 	UpdateBug(id, title, description, priority) {
 		axios({
 			method: 'put',
@@ -58,9 +70,6 @@ class Comments{
 			location.reload();
 			console.log('voted, reloaded', response)
 		})
-	}
-	ScoreBug(bugId, vote) {
-
 	}
 }
 

@@ -20,7 +20,8 @@ class Bug(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
-
+    voters = ArrayField(models.CharField(max_length=150), default=list)
+    
     def __str__(self):
         return '%s by %s' % (self.title, self.reported_by)
 

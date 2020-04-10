@@ -4,7 +4,7 @@
 {% block content %}
 {% if user.is_authenticated %}
     <div class="row jumbotron">
-    	<h1 class="display-3">Bug Tracker</h1>
+		<h1 class="display-3">Bug Tracker</h1>
 		<p class="lead">Hello {{ current_user|title }} and welcome to the Bug Tracker application, built to help you with your bug related issues</p>
 		<hr class="my-2">
 		<p>Below you can browse bugs reported by other users and see your own</p>
@@ -40,11 +40,11 @@
 				<div class="card border scroll">
 					{% if bugs_by_user.all %}
 					<div class="card-body">
-					  {% for bug in bugs_by_user %}
-					  <div class="list-group">
-							<a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% else %} bg-light {% endif %}"> {{ bug.title }} </a>
-					  </div>
-					  {% endfor %}
+						{% for bug in bugs_by_user %}
+						<div class="list-group">
+								<a href="/bugs/{{ bug.id }}" class="list-group-item list-group-item-action  {% if bug.fixed %} bg-success {% else %} bg-light {% endif %}"> {{ bug.title }} </a>
+						</div>
+						{% endfor %}
 					</div>
 					{% else %}
 						<div class="card-body">
@@ -57,8 +57,8 @@
 		</div>
 	</div>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Login</a>
-  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
+	<p>You are not logged in</p>
+	<a href="{% url 'login' %}">Login</a>
+	<p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
 {% endif %}
 {% endblock %}

@@ -54,8 +54,6 @@ class CommentsView(View):
     def put(self, request, *args, **kwargs):
         body = json.loads(request.body)
         user = request.user
-        print(user.username)
-        print(body)
         vote = body['vote']
         commentId = body['comment']
         comment = Comment.objects.get(pk=commentId)
@@ -85,18 +83,29 @@ class singleBugView(View):
     
     def put(self, request, *args, **kwargs):
         body = json.loads(request.body)
-        try:
-            if request.user.is_authenticated:
-                bug = Bug.objects.filter(pk=kwargs['pk'])
-                bug.update(**body)
-                return HttpResponse('Resource updated')
+        if 'vote' in body:
+            user = request.user
+            vote = body['vote']
+            bug = Bug.objects.get(pk=kwargs['pk'])
+            if str(user) not in bug.voters:
+                bug.score += vote
+                bug.voters.append(user)
+                bug.save()
+                return HttpResponse('vote counted')
             else:
-                return HttpResponse('Not logged in')
-        except ObjectDoesNotExist as error:
-            return HttpResponse(error)
+                return HttpResponse('vote already counted')
+        else:
+            try:
+                if request.user.is_authenticated:
+                    bug = Bug.objects.filter(pk=kwargs['pk'])
+                    bug.update(**body)
+                    return HttpResponse('Resource updated')
+                else:
+                    return HttpResponse('Not logged in')
+            except ObjectDoesNotExist as error:
+                return HttpResponse(error)
 
     def delete(self, request, *args, **kwargs):
-        print(request.user)
         try:
             if request.user.is_authenticated:
                 bug = Bug.objects.get(pk=kwargs['pk'], reported_by=request.user)
