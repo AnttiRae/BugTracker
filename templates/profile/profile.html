@@ -1,12 +1,13 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
-
 {% block content %}
+{% include 'profile/modal.html'%}
 {% if user.is_authenticated %}
 <div class="card row">
     <div class="card-body">
-        <h2 class="card-title">
+        <h2 class="card-title d-flex w-100 justify-content-between">
             User Profile
+            <button id="profileEditButton" type="button" class="btn btn-primary" data-toggle="modal" data-taget="#editModal">Edit</button>
         </h2>
             <table class="table">
                 <tbody>
@@ -20,15 +21,30 @@
                     </tr>
                     <tr>
                         <td scope="row">Date Joined</td>
-                        <td>{{ user.date_joined}}</td>
+                        <td>{{ user.date_joined }}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{ user.profile.get_image_url }}" class="img-fluid"/> 
+                </div>
+                <div class="col-10">
+                    <h2>Bio</h2>
+                    <p>{{ user.profile.bio }}</p>
+                </div>
+            </div>
+    </div>
 </div>
+<script>
+    let editModal = $("#profileEditModal");
+    $("#profileEditButton").click(function(){
+        editModal.modal();
+    })
+</script>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Login</a>
-  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Login</a>
+    <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
 {% endif %}
 {% endblock %}
