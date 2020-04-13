@@ -7,7 +7,7 @@ from django.db.models import F
 import json
 # Create your views here.
 
-from .forms import BugForm, CommentForm
+from .forms import BugForm, CommentForm, ProfileForm
 from .models import Bug, Comment
 
 class BugView(View):
@@ -40,7 +40,6 @@ class CommentsView(View):
     initial = {'key': 'value'}
 
     def post(self, request, *args, **kwargs):
-        print('POST comment')
         form = self.form_class(request.POST)
         if form.is_valid():
             comment = request.POST.dict()
@@ -76,7 +75,6 @@ class singleBugView(View):
         try:
             bug = Bug.objects.get(pk=kwargs['pk'])
             comments = Comment.objects.filter(bug=kwargs['pk']).order_by('-created_at')
-            print(comments)
         except ObjectDoesNotExist as error:
             return HttpResponse(error)
         return render(request, 'bugs/singleBug.html', {'form': form, 'bug': bug, 'comments': comments})
@@ -117,12 +115,23 @@ class singleBugView(View):
             return HttpResponse(error)
 
 class ProfileView(View):
+    form_class = ProfileForm
+    initial = {'key': 'value'}
+    template_name = 'profile/profile.html'
 
     def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
         if request.user.is_authenticated:
             current_user = User.objects.get(username=request.user)
-            return render(request, 'profile/profile.html', {'user': current_user})
+            return render(request, 'profile/profile.html', {'user': current_user, 'form': form})
         return render(request, 'profile/profile.html')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES ,instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+        return redirect('/profile/')
+
 
 class HomeView(View):
 

@@ -1,5 +1,5 @@
 from django import forms
-
+from .models import Profile
 class BugForm(forms.Form):
     PRIORITIES = (
         ('High', 'High'),
@@ -26,3 +26,19 @@ class CommentForm(forms.Form):
             attrs={'class': 'form-control', 'rows': 2}),
         label='Comment', max_length=512)
     
+# class ProfileForm(forms.Form):
+#     bio = forms.CharField(
+#         widget=forms.TextInput(
+#             attrs={'class':'form-control'}),
+#         label='Bio', max_length=512)
+#     image = forms.ImageField(required=False)
+
+# class UserForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ('first_name', 'last_name', 'email')
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'image')
