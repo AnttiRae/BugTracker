@@ -39,8 +39,14 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=512, blank=True)
-    image = models.FileField(upload_to='images/', null=True, verbose_name='kuva')
+    image = models.FileField(upload_to='images/', null=True, verbose_name='kuva', blank=True)
 
+    @property
+    def get_image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return "/static/images/user.jpg"
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
