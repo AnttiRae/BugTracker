@@ -39,7 +39,7 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=512, blank=True)
-    image = models.FileField(upload_to='images/', null=True, verbose_name='kuva', blank=True)
+    image = models.FileField(upload_to='images/', null=True, verbose_name='Profile Picture', blank=True)
 
     @property
     def get_image_url(self):

@@ -42,3 +42,6 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('bio', 'image')
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
