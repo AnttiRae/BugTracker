@@ -51,10 +51,10 @@
                 {% endfor %}
             </div>
         </div>
-          
+
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Login</a>
-  <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Login</a>
+    <p>Not registered yet? Sign up <a href="/accounts/signup/">here</a></p>
 {% endif %}
 {% endblock %}

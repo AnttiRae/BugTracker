@@ -39,11 +39,16 @@
             {% endif %}
           </li>
         </ul>
+        {% if user.is_authenticated %}
         <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                   <a class="nav-link" href="/profile/">Logged in as {{ user.username }}</a>
               </li>
+              <li class="nav-item">
+                <img src="{{ user.profile.get_image_url }}" onclick="window.location.href='/profile/'" class="img-fluid profile-picture-small"/> 
+              </li>
           </ul>
+        {% endif %}
       </div>
   </nav>
   
