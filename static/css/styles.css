@@ -10,17 +10,17 @@
     text-align: center;
 }
 .profile-picture {
-    min-width: 100px;
-    min-height: 100px;
-    max-width: 100px;
-    max-height: 100px;
+    min-width: 5rem;
+    min-height: 5rem;
+    max-width: 5rem;
+    max-height: 5rem;
     border-radius: 10%;
 }
 .profile-picture-small {
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px;
+    min-width: 2rem;
+    min-height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
     border-radius: 10%;
     cursor: pointer;
 }
